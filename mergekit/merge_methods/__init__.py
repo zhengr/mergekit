@@ -56,6 +56,18 @@ def get(method: str) -> MergeMethod:
             sparsification_method=SparsificationMethod.rescaled_random,
             default_normalize=False,
         )
+    elif method == "breadcrumbs":
+        return GeneralizedTaskArithmeticMerge(
+            consensus_method=None,
+            sparsification_method=SparsificationMethod.magnitude_outliers,
+            default_normalize=False,
+        )
+    elif method == "breadcrumbs_ties":
+        return GeneralizedTaskArithmeticMerge(
+            consensus_method=ConsensusMethod.sum,
+            sparsification_method=SparsificationMethod.magnitude_outliers,
+            default_normalize=False,
+        )
     raise RuntimeError(f"Unimplemented merge method {method}")
 
 
