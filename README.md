@@ -94,15 +94,17 @@ Several examples of merge configurations are available in [`examples/`](examples
 
 A quick overview of the currently supported merge methods:
 
-| Method                                                                                       | `merge_method` value | Multi-Model | Uses base model |
-| -------------------------------------------------------------------------------------------- | -------------------- | ----------- | --------------- |
-| Linear ([Model Soups](https://arxiv.org/abs/2203.05482))                                     | `linear`             | ✅          | ❌              |
-| SLERP                                                                                        | `slerp`              | ❌          | ✅              |
-| [Task Arithmetic](https://arxiv.org/abs/2212.04089)                                          | `task_arithmetic`    | ✅          | ✅              |
-| [TIES](https://arxiv.org/abs/2306.01708)                                                     | `ties`               | ✅          | ✅              |
-| [DARE](https://arxiv.org/abs/2311.03099) [TIES](https://arxiv.org/abs/2306.01708)            | `dare_ties`          | ✅          | ✅              |
-| [DARE](https://arxiv.org/abs/2311.03099) [Task Arithmetic](https://arxiv.org/abs/2212.04089) | `dare_linear`        | ✅          | ✅              |
-| Passthrough                                                                                  | `passthrough`        | ❌          | ❌              |
+| Method                                                                                           | `merge_method` value | Multi-Model | Uses base model |
+| ------------------------------------------------------------------------------------------------ | -------------------- | ----------- | --------------- |
+| Linear ([Model Soups](https://arxiv.org/abs/2203.05482))                                         | `linear`             | ✅          | ❌              |
+| SLERP                                                                                            | `slerp`              | ❌          | ✅              |
+| [Task Arithmetic](https://arxiv.org/abs/2212.04089)                                              | `task_arithmetic`    | ✅          | ✅              |
+| [TIES](https://arxiv.org/abs/2306.01708)                                                         | `ties`               | ✅          | ✅              |
+| [DARE](https://arxiv.org/abs/2311.03099) [TIES](https://arxiv.org/abs/2306.01708)                | `dare_ties`          | ✅          | ✅              |
+| [DARE](https://arxiv.org/abs/2311.03099) [Task Arithmetic](https://arxiv.org/abs/2212.04089)     | `dare_linear`        | ✅          | ✅              |
+| [Model Breadcrumbs](https://arxiv.org/abs/2312.06795)                                            | `breadcrumbs`        | ✅          | ✅              |
+| [Model Breadcrumbs](https://arxiv.org/abs/2312.06795) + [TIES](https://arxiv.org/abs/2306.01708) | `breadcrumbs_ties`   | ✅          | ✅              |
+| Passthrough                                                                                      | `passthrough`        | ❌          | ❌              |
 
 ### Linear
 
@@ -140,6 +142,15 @@ Parameters: same as [Linear](#linear), plus:
 In the same vein as TIES, sparsifies task vectors to reduce interference. Differs in that DARE uses random pruning with a novel rescaling to better match performance of the original models. DARE can be used either with the sign consensus algorithm of TIES (`dare_ties`) or without (`dare_linear`).
 
 Parameters: same as [TIES](#ties) for `dare_ties`, or [Linear](#linear) for `dare_linear`
+
+### [Model Breadcrumbs](https://arxiv.org/abs/2312.06795)
+
+An extension of task arithmetic that discards both small and and extremely large differences from the base model. As with DARE, the Model Breadcrumbs algorithm can be used with (`breadcrumbs_ties`) or without (`breadcrumbs`) the sign consensus algorithm of TIES.
+
+Parameters: same as [Linear](#linear), plus:
+
+- `density` - fraction of weights in differences from the base model to retain
+- `outlier_fraction` - fraction of discarded weights that should be large outlier values (TODO: find sane default)
 
 ### Passthrough
 
