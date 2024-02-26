@@ -157,7 +157,7 @@ def get_gate_params(
         model = AutoModelForCausalLM.from_pretrained(
             model_ref.model.path,
             revision=model_ref.model.revision,
-            torch_dtype=torch.bfloat16,
+            torch_dtype=torch.float16,
             device_map=device,
             low_cpu_mem_usage=True,
             load_in_4bit=load_in_4bit,
