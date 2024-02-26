@@ -164,6 +164,27 @@ STABLELM_INFO = StaticTensorNames(
     ),
 )
 
+MIXTRAL_INFO = StaticTensorNames(
+    name="MixtralForCausalLM",
+    layer_weight_suffixes=[
+        "block_sparse_moe.experts.0.w1.weight",
+        "block_sparse_moe.experts.0.w2.weight",
+        "block_sparse_moe.experts.0.w3.weight",
+        "block_sparse_moe.experts.1.w1.weight",
+        "block_sparse_moe.experts.1.w2.weight",
+        "block_sparse_moe.experts.1.w3.weight",
+        "block_sparse_moe.gate.weight",
+        "input_layernorm.weight",
+        "post_attention_layernorm.weight",
+        "self_attn.k_proj.weight",
+        "self_attn.o_proj.weight",
+        "self_attn.q_proj.weight",
+        "self_attn.v_proj.weight",
+    ],
+    # lol
+    **LLAMA_INFO.model_dump(exclude=["name", "layer_weight_suffixes"]),
+)
+
 GPT_NEOX_INFO = StaticTensorNames(
     name="GPTNeoXForCausalLM",
     pre_weight_names=["gpt_neox.embed_in.weight"],
@@ -467,6 +488,7 @@ def get_architecture_info(config: PretrainedConfig) -> StaticTensorNames:
     supported = [
         LLAMA_INFO,
         MISTRAL_INFO,
+        MIXTRAL_INFO,
         GPT_NEOX_INFO,
         QWEN_INFO,
         GPT2_INFO,
